@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Te quieres casar conmigo?</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #fff0f6;
+      padding-top: 100px;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #d6336c;
+    }
+
+    h2 {
+      font-size: 2em;
+      color: #d6336c;
+      margin-top: 20px;
+    }
+
+    button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      margin: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #69db7c;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #ff6b6b;
+      color: white;
+      position: absolute;
+    }
+
+    #imageContainer {
+      margin-top: 30px;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(20px);
+    }
+
+    #imageContainer.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    img {
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¿Te quieres casar conmigo?</h1>
+  <button id="yesBtn">Sí 💍</button>
+  <button id="noBtn">No ❌</button>
+
+  <h2 id="responseMessage" style="display: none; transition: opacity 1s ease, transform 1s ease; opacity: 0; transform: scale(0.9);">
+    💘 yo sabía que ibas a decir que sí... no había otra opción 💍 monogamia o muerte 😤 te amo mi amorcito 💖
+  </h2>
+
+  <div id="imageContainer">
+    <img src="https://i.imgur.com/nI4xeLO.jpg" alt="mi futuro esposo xd">
+  </div>
+
+  <!-- Incluye canvas-confetti desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const imageContainer = document.getElementById('imageContainer');
+    const responseMessage = document.getElementById('responseMessage');
+
+    yesBtn.addEventListener('click', () => {
+      responseMessage.style.display = 'block';
+      responseMessage.style.opacity = '1';
+      responseMessage.style.transform = 'scale(1)';
+      imageContainer.classList.add('show');
+      enterFullscreen();
+      launchConfetti();
+    });
+
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.floor(Math.random() * (window.innerWidth - 100));
+      const y = Math.floor(Math.random() * (window.innerHeight - 50));
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    function enterFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    function launchConfetti() {
+      var count = 200;
+      var defaults = {
+        origin: { y: 0.7 }
+      };
+
+      function fire(particleRatio, opts) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio)
+        });
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+    }
+  </script>
+
+</body>
+</html>
